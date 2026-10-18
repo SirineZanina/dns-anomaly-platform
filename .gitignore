@@ -1,0 +1,10 @@
+__pycache__/
+.env
+*.pyc
+.venv/
+data/pcaps/*
+data/datasets/*
+!data/pcaps/.gitkeep
+!data/datasets/.gitkeep
+ml/models/*.joblib
+.ipynb_checkpoints/
