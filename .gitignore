@@ -8,3 +8,5 @@ data/datasets/*
 !data/datasets/.gitkeep
 ml/models/*.joblib
 .ipynb_checkpoints/
+
+data/zeek-out/
