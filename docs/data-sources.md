@@ -9,7 +9,7 @@ Version 0.1, 19 Oct 2026. This document lists the 4 data sources of the platform
 | DNS logs | Zeek `dns.log` (Packetbeat as alternative) | queries, answers, record types, response codes | UDP/TCP 53 | `dns-logs-*` |
 | Firewall / NetFlow | Zeek `conn.log` in the lab; nfdump or firewall logs if available | flows, bytes, packets, ports | any | `flows-*` |
 | DHCP / auth logs | Zeek `dhcp.log` or the lab DHCP server (syslog), auth logs | IP to MAC and host name, logins | UDP 67/68, syslog | `dhcp-*`, `auth-*` |
-| Threat-intel feeds | abuse.ch, OpenPhish, Bambenek | known bad domains, URLs and IPs | HTTP download | `ti-indicators` |
+| Threat-intel feeds | abuse.ch, OpenPhish | known bad domains, URLs and IPs | HTTP download | `ti-indicators` |
 
 **Why `conn.log` as the flow source:** `dns.log` has no packet or byte sizes, but the flood and exfiltration features need bytes per second and response size. Zeek's `conn.log` has them and shares the connection `uid` with `dns.log`, so the two can be joined. A real NetFlow exporter is optional and maps to the same ECS fields.
 
@@ -91,7 +91,7 @@ Auth logs (SSH and login events, optional): `user.name`, `event.action` (for exa
 | Indicator value | `threat.indicator.name` | domain, IP or URL | the value used for matching |
 | Domain | `threat.indicator.url.domain` | domain or URL host | for domain and URL indicators |
 | IP | `threat.indicator.ip` | IP | for IP indicators |
-| Provider | `threat.indicator.provider` | `Bambenek`, `OpenPhish`, `abuse.ch` | |
+| Provider | `threat.indicator.provider` | `OpenPhish`, `abuse.ch` | |
 | Feed name | `threat.feed.name` | feed identifier | |
 | Description | `threat.indicator.description` | malware family or note | |
 | First / last seen | `threat.indicator.first_seen`, `threat.indicator.last_seen` | feed date, or download time | |
@@ -99,12 +99,11 @@ Auth logs (SSH and login events, optional): `user.name`, `event.action` (for exa
 
 | Feed | Content | Indicator type |
 |---|---|---|
-| Bambenek DGA feed | known DGA domains | `domain-name` |
-| Bambenek C2 domain list | active command-and-control domains | `domain-name` |
 | OpenPhish | phishing URLs | `url` |
 | abuse.ch (Feodo Tracker, URLhaus) | botnet C2 IPs, malware URLs | `ipv4-addr`, `url` |
 
 Feed URLs and access rules change, and abuse.ch has been moving some services to free API keys. Check the download script comments before relying on a feed.
+The Bambenek feeds (DGA and C2 domains) are no longer public: since 2019 they require a license, and a download returned 403 on 19 Oct 2026. They are not used. The labeled DGA dataset replaces them for training, and they could be added later if a research license is granted.
 
 ## 4. Capture mode decision
 

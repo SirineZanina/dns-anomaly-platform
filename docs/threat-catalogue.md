@@ -63,7 +63,7 @@ The `alert_type` column gives the values of the `AlertType` enumeration used by 
   - Supervised ML (main): Random Forest or XGBoost on the lexical features, trained on DGA lists versus benign domains.
   - Rule: NXDOMAIN ratio and distinct-domain count above a threshold in a window, to catch a client behaving like infected.
   - Optional later: a character-level model (LSTM/CNN) as comparison in the evaluation report.
-- **How I will generate it:** Bambenek and 360 netlab DGA lists labeled as malicious, Tranco top-1M as benign. For live tests, a small script that queries generated names through the lab resolver, so Zeek logs real `NXDOMAIN` responses.
+- **How I will generate it:** The labeled DGA dataset built from 360 netlab data (DGA and legitimate domains) plus Tranco top-1M as benign. For live tests, a small script that queries generated names through the lab resolver, so Zeek logs real `NXDOMAIN` responses.
 - **Likely false positives:**
   - Browsers that send random single-label probe queries at startup (for example Chromium's DNS-hijack check).
   - Hash-based or machine-generated hostnames (CDNs, cloud storage, mail tracking links).
